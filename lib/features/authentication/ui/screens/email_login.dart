@@ -6,35 +6,30 @@ import 'package:testapp/common/utils/size_config.dart';
 import 'package:testapp/common/widgets/%20buttons/custom_rounded_button.dart';
 import 'package:testapp/common/widgets/page_wrapper.dart';
 import 'package:testapp/common/widgets/text_field/custom_textfield.dart';
-import 'package:testapp/common/widgets/title_description_widget.dart';
-import 'package:testapp/features/authentication/ui/screens/login_screen.dart';
-import 'package:testapp/features/authentication/ui/screens/otp_verification_screen.dart';
+import 'package:testapp/features/authentication/ui/screens/reset_password_screen.dart';
+import 'package:testapp/features/authentication/ui/screens/signup_screen.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class EmailLogin extends StatefulWidget {
+  const EmailLogin({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<EmailLogin> createState() => _EmailLoginState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _EmailLoginState extends State<EmailLogin> {
   bool isHidden = false;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     return PageWrapper(
+      padding: EdgeInsets.zero,
+      showAppBar: false,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TitleDescriptionWidget(
-              title: "auth.signup".tr(),
-              description: "Let’s login with your account !",
-              buttomGap: 21.hp,
-            ),
-            CustomTextField(hintText: "Username"),
-            SizedBox(height: 16.hp),
+            SizedBox(height: 20.hp),
             CustomTextField(hintText: "Email"),
             SizedBox(height: 16.hp),
             CustomTextField(
@@ -52,14 +47,27 @@ class _SignupScreenState extends State<SignupScreen> {
                 });
               },
             ),
-            SizedBox(height: 24.hp),
+            SizedBox(height: 18.hp),
+            GestureDetector(
+              onTap: () {
+                NavigationService.push(target: ResetPasswordScreen());
+              },
+              child: Text(
+                "Forgot Password?",
+                style: textTheme.titleSmall!.copyWith(
+                  color: AppColors.primaryColor,
+                ),
+              ),
+            ),
+
+            SizedBox(height: 51.hp),
 
             CustomRoundedButton(
-              horizontalMargin: 0,
-              title: "continue".tr(),
+              title: "auth.login".tr(),
               onPressed: () {
-                NavigationService.push(target: OtpVerificationScreen());
+                //     NavigationService.push(target: EnableLocationScreen());
               },
+              horizontalMargin: 0,
             ),
 
             Container(
@@ -67,52 +75,22 @@ class _SignupScreenState extends State<SignupScreen> {
               padding: EdgeInsets.symmetric(vertical: 25),
               child: GestureDetector(
                 onTap: () {
-                  NavigationService.pushReplacement(target: LoginScreen());
+                  NavigationService.push(target: SignupScreen());
                 },
                 child: Text.rich(
                   textAlign: TextAlign.center,
                   TextSpan(
-                    text: 'Already have an account? ',
+                    text: 'Don’t have an account? ',
                     style: textTheme.bodySmall,
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'Log In',
+                        text: 'Sign Up',
                         style: textTheme.titleSmall!.copyWith(
                           color: AppColors.primaryColor,
                         ),
                       ),
                     ],
                   ),
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 25),
-              child: Text.rich(
-                textAlign: TextAlign.center,
-                TextSpan(
-                  text: 'By continuing forwards, you agree to Fitline\'s',
-                  style: textTheme.bodyMedium,
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: ' Privacy Policy',
-                      style: textTheme.titleSmall!.copyWith(
-                        color: AppColors.primaryColor,
-                      ),
-                    ),
-                    TextSpan(
-                      text: ' and ',
-                      style: textTheme.bodySmall,
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Terms & Conditions',
-                          style: textTheme.titleSmall!.copyWith(
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
                 ),
               ),
             ),
